@@ -1,0 +1,20 @@
+{
+    "name": "mikoweb/joomla-rapid-k2-theme",
+    "type": "joomlatools-installer",
+    "description": "Joomla Rapid K2 Theme",
+    "homepage": "http://vision-web.pl",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rafał Mikołajun",
+            "email": "rafal@vision-web.pl",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "joomlatools/installer": "*",
+        "mikoweb/joomla-rapid-framework-plugin": "dev-master"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
