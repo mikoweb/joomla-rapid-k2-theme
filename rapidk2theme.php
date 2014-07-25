@@ -45,9 +45,28 @@ class PlgK2Rapidk2theme extends K2Plugin
                 <div class="controls"><select id="plugins_twig_template" name="plugins[twig_template]">';
 
             // lista szablonów
-            $options = array('default');
+            $options = array();
+
+            // szablony w komponencie
+            foreach(glob(JPATH_SITE . "/components/com_k2/templates/twig/views", GLOB_BRACE) as $folder) {
+                if (is_dir($folder)) {
+                    $options[] = $folder;
+                }
+            }
+
+            var_dump($options);
+
+            // szablony w motywie
+            /*$path = $client->path . '/templates/' . $templateName . '/views/extension/modules/' . $module . '/views';
+            foreach(glob($path . "/{*.html.twig}", GLOB_BRACE) as $folder) {
+                if (is_dir($folder)) {
+
+                }
+            }*/
+
+            // tworzenie znaczników option
             foreach ($options as $opt) {
-                $form .= "<option>$opt</option>";
+                $form .= "<option" . ($opt == $template ? " selected" : '') . ">$opt</option>";
             }
 
             $form .= '</select></div></div>';
