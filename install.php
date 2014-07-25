@@ -13,8 +13,17 @@ class plgK2Rapidk2themeInstallerScript
     function postflight($type, $parent)
     {
         if ($type == "install" || $type == "update") {
-            rename(JPATH_PLUGINS . "/k2/rapidk2theme/template/twig", JPATH_SITE . "/components/com_k2/templates/twig");
-            rename(JPATH_PLUGINS . "/k2/rapidk2theme/template/generic.php", JPATH_SITE . "/components/com_k2/templates/generic.php");
+            $path = JPATH_SITE . "/components/com_k2/templates/twig";
+            if (file_exists($path)) {
+                JFolder::delete($path);
+            }
+            rename(JPATH_PLUGINS . "/k2/rapidk2theme/template/twig", $path);
+
+            $path = JPATH_SITE . "/components/com_k2/templates/generic.php";
+            if (file_exists($path)) {
+                unlink($path);
+            }
+            rename(JPATH_PLUGINS . "/k2/rapidk2theme/template/generic.php", $path);
         }
 
         if ($type == "install") {
