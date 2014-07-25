@@ -76,9 +76,8 @@ class PlgK2Rapidk2theme extends K2Plugin
             }
 
             // szablony w motywie
-            var_dump(JPATH_SITE . "/templates/" . $templateName . "/views/extension/components/com_k2/templates/twig/views/");
             if (!empty($templateName)) {
-                foreach(glob(JPATH_SITE . "/templates/" . $templateName . "/views/extension/components/com_k2/templates/twig/views/'*", GLOB_BRACE) as $folder) {
+                foreach(glob(JPATH_SITE . "/templates/" . $templateName . "/views/extension/components/com_k2/templates/twig/views/*", GLOB_BRACE) as $folder) {
                     if (is_dir($folder)) {
                         $info = pathinfo($folder);
                         if (!in_array($info['basename'], $options)) {
