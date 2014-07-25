@@ -48,9 +48,10 @@ class PlgK2Rapidk2theme extends K2Plugin
             $options = array();
 
             // szablony w komponencie
-            foreach(glob(JPATH_SITE . "/components/com_k2/templates/twig/views", GLOB_BRACE) as $folder) {
+            foreach(glob(JPATH_SITE . "/components/com_k2/templates/twig/views/*", GLOB_BRACE) as $folder) {
                 if (is_dir($folder)) {
-                    $options[] = $folder;
+                    $info = pathinfo($folder);
+                    $options[] = $info['basename'];
                 }
             }
 
