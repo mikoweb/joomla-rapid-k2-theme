@@ -111,7 +111,7 @@ class PlgK2Rapidk2theme extends K2Plugin
             $form .= '</div>';
 
             $plugin = new JObject;
-            $plugin->set('name', JText::_('Rapid Framework'));
+            $plugin->set('name', JText::_('K2_SELECT_A_TEMPLATE'));
             $plugin->set('fields', $form);
             return $plugin;
         }
