@@ -33,6 +33,26 @@ class PlgK2Rapidk2theme extends K2Plugin
         if ($type == 'category') {
             $config = json_decode($item->plugins, true);
 
+            // Get the database object and a new query object.
+            $db = JFactory::getDbo();
+            $query = $db->getQuery(true);
+
+            // Build the query.
+            $query->select('template')
+                ->from('#__template_styles as tpl')
+                ->where('tpl.client_id = 0')
+                ->where('tpl.home = 1');
+
+            $db->setQuery($query);
+            $results = $db->loadObjectList();
+
+            // domyślny motyw strony
+            if (!empty($results)) {
+                $templateName = $results[0]->template;
+            } else {
+                $templateName = null;
+            }
+
             // wybrany szablon
             $template = isset($config['twig_template']) ? $config['twig_template'] : null;
 
@@ -55,15 +75,20 @@ class PlgK2Rapidk2theme extends K2Plugin
                 }
             }
 
-            var_dump($options);
-
             // szablony w motywie
-            /*$path = $client->path . '/templates/' . $templateName . '/views/extension/modules/' . $module . '/views';
-            foreach(glob($path . "/{*.html.twig}", GLOB_BRACE) as $folder) {
-                if (is_dir($folder)) {
-
+            if (!empty($templateName)) {
+                foreach(glob(JPATH_SITE . "/templates/" . $templateName . "/views/extension/components/com_k2/templates/twig/views/'*", GLOB_BRACE) as $folder) {
+                    if (is_dir($folder)) {
+                        $info = pathinfo($folder);
+                        if (!in_array($info['basename'], $options)) {
+                            $options[] = $info['basename'];
+                        }
+                    }
                 }
-            }*/
+            }
+
+            // sortowanie alfabetycznie
+            sort($options);
 
             // tworzenie znaczników option
             foreach ($options as $opt) {
