@@ -71,7 +71,7 @@ class PlgK2Rapidk2theme extends K2Plugin
 
             // pole wybór szablonu
             $form .= '<div class="control-group">
-                <div class="control-label"><label id="plugins_twig_template-lbl" for="plugins_twig_template">Template</label></div>
+                <div class="control-label"><label id="plugins_twig_template-lbl" for="plugins_twig_template">' . JText::_("K2_SELECT_A_TEMPLATE") . '</label></div>
                 <div class="controls"><select id="plugins_twig_template" name="plugins[twig_template]">';
 
             // lista szablonów
@@ -111,7 +111,7 @@ class PlgK2Rapidk2theme extends K2Plugin
             $form .= '</div>';
 
             $plugin = new JObject;
-            $plugin->set('name', JText::_('K2_SELECT_A_TEMPLATE'));
+            $plugin->set('name', JText::_('Rapid Framework'));
             $plugin->set('fields', $form);
             return $plugin;
         }
