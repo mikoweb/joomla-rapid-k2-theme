@@ -12,6 +12,8 @@ class plgK2Rapidk2themeInstallerScript
      */
     function postflight($type, $parent)
     {
+        var_dump("OK");
+        var_dump($type);
         if ($type == "install" || $type == "update") {
             rename(JPATH_PLUGINS . "/k2/rapidk2theme/template/twig", JPATH_COMPONENT_SITE . "/com_k2/templates/twig");
             rename(JPATH_PLUGINS . "/k2/rapidk2theme/template/generic.php", JPATH_COMPONENT_SITE . "/com_k2/templates/generic.php");
