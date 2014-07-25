@@ -2,7 +2,7 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-class com_rapidrouterInstallerScript
+class plgK2Rapidk2themeInstallerScript
 {
     /**
      * method to run after an install/update/uninstall method
