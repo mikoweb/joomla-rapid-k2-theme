@@ -1,0 +1,197 @@
+/**
+ * @copyright   2013-2014 Rafał Mikołajun
+ * @author      Rafał Mikołajun <rafal@vision-web.pl>
+ * @website     www.vision-web.pl
+ * @package     Joomla 3.x Template by Rafał Mikołajun
+ */
+
+/* Lista artykułów w kategorii */
+.blogCategoryItems, .blogItems {
+  .leading, .row {
+    margin-bottom: 15px;
+    .col-sm-6 {
+      &:first-child {
+        padding-right: 5px;
+      }
+      &:last-child {
+        padding-left: 5px;
+      }
+    }
+
+    article {
+      &:last-child {
+        margin-bottom: @theme-layout-padding;
+      }
+
+      figure {
+        margin: 0 0 14px 0;
+        float: none;
+      }
+    }
+  }
+
+  article {
+    margin-bottom: @theme-layout-padding;
+
+    figure {
+      float: left;
+      margin: 0 20px 0 0;
+      padding: 0;
+      img {
+        .border-radius(@baseBorderRadius);
+        &:hover, &:focus {
+          .opacity(90);
+        }
+      }
+    }
+
+    header {
+      time {
+        display: block;
+        font-size: 11px;
+        line-height: 1.2em;
+        margin: 0;
+        padding: 0;
+        color: @red;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      .itemTitle {
+        margin: 0.4em 0;
+        font-size: 20px;
+        a {
+          color: @headingsColor;
+        }
+      }
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    p {
+      margin-bottom: 0.75em;
+    }
+  }
+}
+
+
+/* Widok artykułu */
+.blogArticle {
+  header {
+    time {
+      display: block;
+      font-size: 11px;
+      line-height: 1.1em;
+      margin: 0 0 7px 0;
+      padding: 0;
+      color: @red;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .itemTitle {
+      margin: 0 0 15px 0;
+      font-size: 35px;
+      line-height: 1.2em;
+    }
+  }
+
+  .itemIntroText, .itemFullText {
+    margin: 0 0 @baseLineHeight*1.7;
+    p {
+      text-align: justify;
+    }
+  }
+
+  .itemFullText {
+    margin: 0;
+  }
+
+  .itemDateModified {
+    display: block;
+    text-align: right;
+    margin: 0;
+    color: @grayLight;
+    font-size: @fontSizeSmall;
+  }
+
+  .tags {
+    margin: 10px 0;
+    ul {
+      .clearfix();
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        float: left;
+        margin: 7px 7px 0 0;
+        a {
+          float: left;
+          padding: 4px 12px;
+          font-weight: bold;
+          font-size: 13px;
+          background-color: #444;
+          color: #fff;
+          .border-radius(@baseBorderRadius);
+          .transition(background-color .5s);
+          &:hover, &:focus {
+            background-color: @red;
+          }
+        }
+      }
+    }
+  }
+
+  .authorInfo {
+    font-size: 13px;
+    line-height: 1.5em;
+    color: #757575;
+    margin: 25px 0;
+    padding: 15px;
+    background: #f7f6f5;
+
+    .avatar {
+      float: left;
+      margin: 0 20px 0 0;
+    }
+
+    .authorName {
+      margin: 0 0 5px 0;
+      font-size: 15px;
+      color: @red;
+      line-height: 1.1em;
+    }
+
+    p {
+      margin: 5px 0;
+    }
+
+    ul.authorLinks {
+      .clearfix();
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        float: left;
+        margin: 7px 7px 0 0;
+        a {
+          float: left;
+          padding: 3px 10px;
+          font-weight: bold;
+          font-size: 12px;
+          background-color: #444;
+          color: #fff;
+          .border-radius(@baseBorderRadius);
+          .transition(background-color .5s);
+          &:hover, &:focus {
+            background-color: @red;
+          }
+        }
+      }
+    }
+  }
+}
