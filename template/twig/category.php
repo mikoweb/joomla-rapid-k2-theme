@@ -3,6 +3,7 @@
 /**
  * @package Joomla Rapid K2 Theme
  * @author Rafał Mikołajun <rafal@mikoweb.pl>
+ * @url http://www.vision-web.pl
  * @license http://opensource.org/licenses/MIT The MIT License (MIT)
  */
 
