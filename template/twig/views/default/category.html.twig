@@ -11,7 +11,7 @@
             {% set leadingSpanClass = (12/k2.params.get('num_leading_columns'))|round(1, 'floor') %}
             {% for item in k2.leading %}
                 <div class="col-sm-{{ leadingSpanClass }}">
-                    {% include '@component/com_k2/templates/twig/views/default/category_item.html.twig'
+                    {% include '@component/com_k2/templates/twig/views/' ~ template ~ '/category_item.html.twig'
                         with { 'item': item, 'params': k2.params, 'utilities': utilities } only %}
                 </div>
             {% endfor %}
@@ -20,7 +20,7 @@
     {# Podstawowe wpisy #}
     {% if k2.primary is defined and k2.primary|length %}
         {% for item in k2.primary %}
-            {% include '@component/com_k2/templates/twig/views/default/category_item.html.twig'
+            {% include '@component/com_k2/templates/twig/views/' ~ template ~ '/category_item.html.twig'
                 with { 'item': item, 'params': k2.params, 'utilities': utilities } only %}
         {% endfor %}
     {% endif %}

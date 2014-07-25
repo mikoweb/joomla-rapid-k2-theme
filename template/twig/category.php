@@ -15,8 +15,12 @@ $utilities = new stdClass();
 $utilities->setDefaultImage = function ($item, $type, $params) {
     K2HelperUtilities::setDefaultImage($item, $type, $params);
 };
-echo TemplateOverride::create('com_k2', '/templates/twig/views/default/category.html.twig')
+
+$plugins = json_decode($this->category->plugins, true);
+$template = (isset($plugins["twig_template"]) ? $plugins["twig_template"] : "default");
+echo TemplateOverride::create('com_k2', '/templates/twig/views/' . $template . '/category.html.twig')
     ->render(TemplateOverride::MODE_COMPONENT, array(
             "k2" => $this,
-            "utilities" => $utilities
+            "utilities" => $utilities,
+            "template" => $template
         ));
