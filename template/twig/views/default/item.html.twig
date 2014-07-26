@@ -49,7 +49,7 @@
             {% if k2.item.params.get('itemAuthorImage') and k2.item.author.avatar is not empty %}
                 {# ilustracja #}
                 <div class="avatar">
-                    <img src="{{ k2.item.author.avatar }}" alt="{% spaceless %}{{ k2.item->author->name|striptags }}{% endspaceless %}" />
+                    <img src="{{ k2.item.author.avatar }}" alt="{% spaceless %}{{ k2.item.author.name|striptags }}{% endspaceless %}" />
                 </div>
             {% endif %}
             <div class="authorDetails">
