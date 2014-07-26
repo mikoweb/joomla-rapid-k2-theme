@@ -44,7 +44,7 @@
         </ul>
     {% endif %}
     {# informacje o autorze #}
-    {% if k2.item.params.get('itemAuthorBlock') and k2.item.created_by_alias not empty %}
+    {% if k2.item.params.get('itemAuthorBlock') and k2.item.created_by_alias is empty %}
         <aside class="authorInfo">
             {% if k2.item.params.get('itemAuthorImage') and k2.item.author.avatar is not empty %}
                 {# ilustracja #}
