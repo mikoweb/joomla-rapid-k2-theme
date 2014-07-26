@@ -1,70 +1,64 @@
 <section class="blogItems">
+    {# tytuł #}
     <div class="page-header">
-        <h2><?php echo $this->params->get('page_title_clean'); ?></h2>
+        <h2>{{ k2.params->get('page_title_clean') }}</h2>
     </div>
-
-    <?php if(count($this->items)): ?>
-    <div class="row-fluid">
-        <?php foreach($this->items as $key=>$item): ?>
-        <?php if ($key%2==0 && $key!=0) echo '</div><div class="row-fluid">'; ?>
-            <div class="span6">
+    {# lista wpisów #}
+    {% if k2.items|length %}
+        <div class="row">
+        {% for item in k2.items %}
+            {% if loop.index is divisible by(2) %}
+                </div><div class="row">
+            {% endif %}
+            <div class="col-sm-6">
+                {# wpis #}
                 <article class="clearfix">
-                    <?php if($item->params->get('tagItemImage',1) && !empty($item->imageGeneric)): ?>
-                    <figure>
-                        <a href="<?php echo $item->link; ?>" title="<?php echo K2HelperUtilities::cleanHtml($item->title); ?>">
-                            <img src="<?php echo $item->imageGeneric; ?>" alt="<?php echo K2HelperUtilities::cleanHtml($item->title); ?>" />
-                        </a>
-                        <?php if(!empty($item->image_caption)) : ?>
-                        <figcaption><?php echo $item->image_caption; ?></figcaption>
-                        <?php endif; ?>
-                    </figure>
-                    <?php endif; ?>
-                    <header>
-                        <?php if($item->params->get('tagItemDateCreated',1)): ?>
-                        <time datetime="<?php echo JHTML::_('date', $item->created, 'Y-m-d H:i'); ?>"><?php echo JHTML::_('date', $item->created, 'd F Y'); ?></time>
-                        <?php endif; ?>
-                        <?php if($item->params->get('tagItemTitle',1)): ?>
-                        <h3 class="itemTitle">
-                            <?php if ($item->params->get('tagItemTitleLinked',1)): ?>
-                            <a href="<?php echo $item->link; ?>">
-                                <?php echo $item->title; ?>
+                    {# ilustracja #}
+                    {% if item.params.get('tagItemImage', 1) and item.imageGeneric is not empty %}
+                        <figure>
+                            <a href="{{ item.link }}" title="{% spaceless %}{{ item.title|striptags }}{% endspaceless %}">
+                                <img src="{{ item.imageGeneric }}" alt="{% spaceless %}{{ item.title|striptags }}{% endspaceless %}" />
                             </a>
-                            <?php else: ?>
-                            <?php echo $item->title; ?>
-                            <?php endif; ?>
-                        </h3>
-                        <?php endif; ?>
+                            {% if item.image_caption is not empty %}
+                                <figcaption>{% spaceless %}{{ item.image_caption }}{% endspaceless %}</figcaption>
+                            {% endif  %}
+                        </figure>
+                    {% endif %}
+                    {# nagłówek #}
+                    <header>
+                        {% if item.params.get('tagItemDateCreated', 1) %}
+                            {# data #}
+                            <time datetime="{{ item.created|date('Y-m-d H:i') }}">{{ item.created|date('d F Y') }}</time>
+                        {% endif %}
+                        {% if item.params.get('tagItemTitle',  1) %}
+                            {# tytuł #}
+                            <h3 class="itemTitle">{% spaceless %}
+                                    {% if item.params.get('tagItemTitleLinked', 1) %}
+                                        <a href="{{ item.link }}">{{ item.title }}</a>
+                                    {% else %}
+                                        {{ item.title }}
+                                    {% endif %}
+                                {% endspaceless %}</h3>
+                        {% endif %}
                     </header>
-                    <?php if($item->params->get('tagItemIntroText',1)): ?>
-                    <p>
-                        <?php
-                                $introtext = explode(' ', strip_tags($item->introtext)); $i=1;
-                        foreach($introtext as $word)
-                        {
-                        echo $word;
-                        if ($i>14)
-                        {
-                        echo '...';
-                        break;
-                        }
-                        else echo ' ';
-                        $i++;
-                        } ?></p>
-                    <?php endif; ?>
-                    <?php if ($item->params->get('tagItemReadMore')): ?>
-                    <a class="btn btn-primary" href="<?php echo $item->link; ?>"><?php echo JText::_('K2_READ_MORE'); ?></a>
-                    <?php endif; ?>
+                    {# lead #}
+                    {% if item.params->get('tagItemIntroText', 1) %}
+                        <p>{{ item.introtext|limit_words(14) }}</p>
+                    {% endif %}
+                    {# read more #}
+                    {% if item.params.get('tagItemReadMore') %}
+                        <a class="btn btn-primary" href="{{ item.link }}">{{ trans('K2_READ_MORE') }}</a>
+                    {% endif %}
                 </article>
             </div>
-            <?php endforeach; ?>
+        {% endfor %}
         </div>
-        <?php endif; ?>
-
-        <?php if($this->pagination->getPagesLinks()): ?>
-        <div class="pagination">
-            <?php echo $this->pagination->getPagesLinks(); ?>
-            <?php //echo $this->pagination->getPagesCounter(); ?>
+    {% endif %}
+    {# Paginacja #}
+    {% if k2.pagination.getPagesLinks()|length %}
+        <div class="pagination-container">
+            {{ k2.pagination.getPagesLinks() }}
+            {# {{ k2.pagination.getPagesCounter() }} #}
         </div>
-        <?php endif; ?>
+    {% endif %}
 </section>
-

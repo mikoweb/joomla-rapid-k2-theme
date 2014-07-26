@@ -3,8 +3,8 @@
     {# ilustracja #}
     {% if item.params.get('catItemImage') and item.image is not empty %}
         <figure>
-            <a href="{{ item.link }}" title="{{ item.title|striptags }}">
-                <img src="{{ item.image }}" alt="{{ item.title|striptags }}" />
+            <a href="{{ item.link }}" title="{% spaceless %}{{ item.title|striptags }}{% endspaceless %}">
+                <img src="{{ item.image }}" alt="{% spaceless %}{{ item.title|striptags }}{% endspaceless %}" />
             </a>
             {% if item.image_caption is not empty %}
             <figcaption>{% spaceless %}{{ item.image_caption }}{% endspaceless %}</figcaption>
