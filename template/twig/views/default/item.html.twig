@@ -1,0 +1,88 @@
+<article class="blogArticle">
+    {# pluginy #}
+    {{ k2.item.event.BeforeDisplay }}
+    {{ k2.item.event.K2BeforeDisplay }}
+    {# nagłówek #}
+    <header>
+        {% if k2.item.params.get('catItemDateCreated') %}
+            {# data #}
+            <time datetime="{{ k2.item.created|date('Y-m-d H:i') }}">{{ k2.item.created|date('d F Y') }}</time>
+        {% endif %}
+        {% if k2.item.params.get('catItemTitle') %}
+            {# tytuł #}
+            <h2 class="itemTitle">{% spaceless %}{{ k2.item.title }}{% endspaceless %}</h2>
+        {% endif %}
+    </header>
+    {# pluginy #}
+    {{ k2.item.event.AfterDisplayTitle }}
+    {{ k2.item.event.K2AfterDisplayTitle }}
+    {{ k2.item.event.BeforeDisplayContent }}
+    {{ k2.item.event.K2BeforeDisplayContent }}
+    {# treść #}
+    {% if k2.item->fulltext is not empty %}
+        {# lead #}
+        {% if k2.item.params.get('itemIntroText') %}
+            <div class="itemIntroText">{{ k2.item.introtext }}</div>
+        {% endif %}
+        {# full #}
+        {% if k2.item.params.get('itemFullText') %}
+            <div class="itemFullText">{{ k2.item.fulltext }}</div>
+        {% endif %}
+    {% else %}
+        {# full #}
+        <div class="itemFullText">{{ k2.item.introtext }}</div>
+    {% endif %}
+    {# pluginy #}
+    {{ k2.item.event.AfterDisplayContent }}
+    {{ k2.item.event.K2AfterDisplayContent }}
+    {# tagi #}
+    {% if k2.item.params.get('itemTags') and k2.item.tags|length %}
+        <ul class="tags">
+            {% for tag in k2.item.tags %}
+                <li><a href="{{ tag.link }}">{{ tag.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {# informacje o autorze #}
+    {% if k2.item.params.get('itemAuthorBlock') and k2.item.created_by_alias is not empty %}
+        <aside class="authorInfo">
+            {% if k2.item.params.get('itemAuthorImage') and k2.item.author.avatar is not empty %}
+                {# ilustracja #}
+                <div class="avatar">
+                    <img src="{{ k2.item.author.avatar }}" alt="{% spaceless %}{{ k2.item->author->name|striptags }}{% endspaceless %}" />
+                </div>
+            {% endif %}
+            <div class="authorDetails">
+                {# nazwa #}
+                <h3 class="authorName">{{ k2.item.author.name }}</h3>
+                {# opis #}
+                {% if k2.item.params.get('itemAuthorDescription') and k2.item.author.profile.description is not empty  %}
+                {{ k2.item.author.profile.description }}
+                {% endif %}
+                {# odnośniki #}
+                {% if k2.item.params.get('itemAuthorURL') or k2.item.params.get('itemAuthorEmail') %}
+                    <ul class="authorLinks">
+                        {% if k2.item.params.get('itemAuthorURL') and k2.item.author.profile.url is not empty %}
+                            <li class="website"><a href="{{ k2.item.author.profile.url }}" target="_blank">{{ k2.item.author.profile.url|replace({'http://': '', 'https://': ''}) }}</a></li>
+                        {% endif %}
+                        {% if k2.item.params.get('itemAuthorEmail') and k2.item.author.email is not empty %}
+                            <li class="email">{{ utilities.EmailCloak(k2.item.author.email) }}</li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+                {# pluginy #}
+                {{ k2.item.event.K2UserDisplay }}
+            </div>
+        </aside>
+    {% endif %}
+    {# data modyfikacji #}
+    {% if k2.item.params.get('itemDateModified') and (k2.item.modified + 0) != 0 %}
+        <span class="itemDateModified">
+            {{ trans('K2_LAST_MODIFIED_ON') }} {{ k2.item.modified|date(trans('K2_DATE_FORMAT_LC2')) }}
+		</span>
+    {% endif %}
+    {# pluginy #}
+    {{ k2.item.event.AfterDisplay }}
+    {{ k2.item.event.K2AfterDisplay }}
+    {{ k2.item.event.K2CommentsBlock }}
+</article>

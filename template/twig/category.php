@@ -19,6 +19,7 @@ $utilities->setDefaultImage = function ($item, $type, $params) {
 
 $plugins = json_decode($this->category->plugins, true);
 $template = (isset($plugins["twig_template"]) ? $plugins["twig_template"] : "default");
+
 echo TemplateOverride::create('com_k2', '/templates/twig/views/' . $template . '/category.html.twig')
     ->render(TemplateOverride::MODE_COMPONENT, array(
             "k2" => $this,
