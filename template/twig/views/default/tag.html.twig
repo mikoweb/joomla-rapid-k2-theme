@@ -1,7 +1,7 @@
 <section class="blogItems">
     {# tytuł #}
     <div class="page-header">
-        <h2>{{ k2.params->get('page_title_clean') }}</h2>
+        <h2>{{ k2.params.get('page_title_clean') }}</h2>
     </div>
     {# lista wpisów #}
     {% if k2.items|length %}
@@ -43,7 +43,7 @@
                     </header>
                     {# lead #}
                     {% if item.params->get('tagItemIntroText', 1) %}
-                        <p>{{ item.introtext|limit_words(14) }}</p>
+                        <p>{{ item.introtext|limit_words(1) }}</p>
                     {% endif %}
                     {# read more #}
                     {% if item.params.get('tagItemReadMore') %}
