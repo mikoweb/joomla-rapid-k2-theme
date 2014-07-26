@@ -19,7 +19,7 @@
     {{ k2.item.event.BeforeDisplayContent }}
     {{ k2.item.event.K2BeforeDisplayContent }}
     {# treść #}
-    {% if k2.item->fulltext is not empty %}
+    {% if k2.item.fulltext is not empty %}
         {# lead #}
         {% if k2.item.params.get('itemIntroText') %}
             <div class="itemIntroText">{{ k2.item.introtext }}</div>
