@@ -43,7 +43,7 @@
                     </header>
                     {# lead #}
                     {% if item.params.get('tagItemIntroText', 1) %}
-                        <p>{{ item.introtext|limit_words(1) }}</p>
+                        <p>{{ item.introtext|limit_words(14) }}</p>
                     {% endif %}
                     {# read more #}
                     {% if item.params.get('tagItemReadMore') %}
