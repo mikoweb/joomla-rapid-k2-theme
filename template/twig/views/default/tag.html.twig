@@ -42,7 +42,7 @@
                         {% endif %}
                     </header>
                     {# lead #}
-                    {% if item.params->get('tagItemIntroText', 1) %}
+                    {% if item.params.get('tagItemIntroText', 1) %}
                         <p>{{ item.introtext|limit_words(1) }}</p>
                     {% endif %}
                     {# read more #}
