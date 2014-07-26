@@ -30,7 +30,7 @@
     </header>
     {# lead #}
     {% if item.params.get('catItemIntroText') %}
-        <p>{{ item.introtext }}</p>
+        <p>{{ item.introtext|striptags }}</p>
     {% endif %}
     {# czytaj więcej #}
     {% if item.params.get('catItemReadMore') %}

@@ -22,15 +22,15 @@
     {% if k2.item.fulltext is not empty %}
         {# lead #}
         {% if k2.item.params.get('itemIntroText') %}
-            <div class="itemIntroText">{{ k2.item.introtext }}</div>
+            <div class="itemIntroText">{{ k2.item.introtext|raw }}</div>
         {% endif %}
         {# full #}
         {% if k2.item.params.get('itemFullText') %}
-            <div class="itemFullText">{{ k2.item.fulltext }}</div>
+            <div class="itemFullText">{{ k2.item.fulltext|raw }}</div>
         {% endif %}
     {% else %}
         {# full #}
-        <div class="itemFullText">{{ k2.item.introtext }}</div>
+        <div class="itemFullText">{{ k2.item.introtext|raw }}</div>
     {% endif %}
     {# pluginy #}
     {{ k2.item.event.AfterDisplayContent }}
@@ -57,7 +57,7 @@
                 <h3 class="authorName">{{ k2.item.author.name }}</h3>
                 {# opis #}
                 {% if k2.item.params.get('itemAuthorDescription') and k2.item.author.profile.description is not empty  %}
-                {{ k2.item.author.profile.description }}
+                {{ k2.item.author.profile.description|raw }}
                 {% endif %}
                 {# odnośniki #}
                 {% if k2.item.params.get('itemAuthorURL') or k2.item.params.get('itemAuthorEmail') %}
@@ -78,7 +78,7 @@
     {# data modyfikacji #}
     {% if k2.item.params.get('itemDateModified') and (k2.item.modified + 0) != 0 %}
         <span class="itemDateModified">
-            {{ trans('K2_LAST_MODIFIED_ON') }} {{ k2.item.modified|date(trans('K2_DATE_FORMAT_LC2')) }}
+            {{ trans('K2_LAST_MODIFIED_ON') }}: {{ k2.item.modified|date(trans('K2_DATE_FORMAT_LC2')) }}
 		</span>
     {% endif %}
     {# pluginy #}
