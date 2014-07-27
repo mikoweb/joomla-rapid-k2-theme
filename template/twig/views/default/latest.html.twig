@@ -1,0 +1,39 @@
+{# ostatnie wpisy z różnych kategorii lub użytkowników #}
+<div class="blogLatestItems">
+    {% set gridWidth = (12/k2.params.get('latestItemsCols'))|round(1, 'floor') %}
+    {% for key, block in k2.blocks %}
+        {% if k2.source == 'categories' %}
+            {# kategorie #}
+            <section class="categoryContainer">
+                <h2><a href="{{ block.link }}">{{ block.name }}</a></h2>
+                <div class="row">
+                    {% for item in block.items %}
+                        {% if loop.index is divisible by(k2.params.get('latestItemsCols')) %}
+                            </div><div class="row">
+                        {% endif %}
+                        <div class="col-sm-{{ gridWidth }}">
+                            {% include '@component/com_k2/templates/twig/views/default/latest_item.html.twig'
+                                with { 'item': item, 'params': k2.params } only %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        {% else %}
+            {# użytkownicy #}
+            <section class="userContainer">
+                <h2><a href="{{ block.link }}">{{ block.name }}</a></h2>
+                <div class="row">
+                    {% for item in block.items %}
+                        {% if loop.index is divisible by(k2.params.get('latestItemsCols')) %}
+                            </div><div class="row">
+                        {% endif %}
+                        <div class="col-sm-{{ gridWidth }}">
+                            {% include '@component/com_k2/templates/twig/views/default/latest_item.html.twig'
+                                with { 'item': item, 'params': k2.params } only %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+    {% endfor %}
+</div>

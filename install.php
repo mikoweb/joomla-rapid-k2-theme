@@ -27,6 +27,10 @@ class plgK2Rapidk2themeInstallerScript
             $path = JPATH_SITE . "/components/com_k2/templates/default/user.php";
             if (file_exists($path)) unlink($path);
             rename(JPATH_PLUGINS . "/k2/rapidk2theme/template/user.php", $path);
+
+            $path = JPATH_SITE . "/components/com_k2/templates/default/latest.php";
+            if (file_exists($path)) unlink($path);
+            rename(JPATH_PLUGINS . "/k2/rapidk2theme/template/latest.php", $path);
         }
 
         if ($type == "install") {

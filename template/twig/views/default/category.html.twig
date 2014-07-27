@@ -1,9 +1,9 @@
 {# widok kategorii #}
-<div class="blogCategoryItems">
+<section class="blogCategoryItems">
     {# Tytuł strony #}
     {% if k2.params.get('show_page_title') %}
         <div class="page-header">
-            <h2>{% spaceless %}{{ k2.params.get('show_page_title')|escape }}{% endspaceless %}</h2>
+            <h2>{% spaceless %}{{ k2.params.get('page_title')|escape }}{% endspaceless %}</h2>
         </div>
     {% endif %}
     {# Główne wpisy #}
@@ -36,4 +36,4 @@
             {% endif %}
         </div>
     {% endif %}
-</div>
+</section>
