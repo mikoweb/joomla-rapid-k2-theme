@@ -16,7 +16,7 @@ use Joomla\RapidApp\App;
 $k2 = $this;
 $container = App::container();
 $document = $container->get('document');
-$document->doc->element('script')->update(function ($value) use($k2) {
+$document->element('script')->update(function ($value) use($k2) {
         $jinput = $jinput = JFactory::getApplication()->input;
         return $value
             . '$.app.define("k2_pagination", '.json_encode($k2->pagination).');
