@@ -34,10 +34,16 @@ $utilities->setDefaultImage = function ($item, $type, $params) {
 
 $plugins = json_decode($this->category->plugins, true);
 $template = (isset($plugins["twig_template"]) ? $plugins["twig_template"] : "default");
+$timeline = (isset($plugins["timeline"]) ? (bool)intval($plugins["timeline"]) : false);
 
-echo TemplateOverride::create('com_k2', '/templates/twig/views/' . $template . '/category.html.twig')
-    ->render(TemplateOverride::MODE_COMPONENT, array(
-            "k2" => $k2,
-            "utilities" => $utilities,
-            "template" => $template
-        ));
+if (!$timeline) {
+    echo TemplateOverride::create('com_k2', '/templates/twig/views/' . $template . '/category.html.twig')
+        ->render(TemplateOverride::MODE_COMPONENT, array(
+                "k2" => $k2,
+                "utilities" => $utilities,
+                "template" => $template
+            ));
+
+} else {
+
+}
