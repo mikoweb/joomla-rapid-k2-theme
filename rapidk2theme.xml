@@ -20,6 +20,8 @@
 
     <languages folder="language">
         <language tag="en-GB">en-GB/en-GB.plg_k2_rapidk2theme.sys.ini</language>
+        <language tag="en-GB">en-GB/en-GB.plg_k2_rapidk2theme.ini</language>
         <language tag="pl-PL">pl-PL/pl-PL.plg_k2_rapidk2theme.sys.ini</language>
+        <language tag="pl-PL">pl-PL/pl-PL.plg_k2_rapidk2theme.ini</language>
     </languages>
 </extension>

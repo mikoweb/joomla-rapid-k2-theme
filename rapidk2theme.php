@@ -40,6 +40,7 @@ class PlgK2Rapidk2theme extends K2Plugin
      */
     public function onRenderAdminForm(&$item, $type, $tab='')
     {
+        // dodatkowe pola w kategorii
         if ($type == 'category') {
             $config = json_decode($item->plugins, true);
 
@@ -106,6 +107,19 @@ class PlgK2Rapidk2theme extends K2Plugin
             }
 
             $form .= '</select></div></div>';
+
+            // pole oś czasu
+            $form .= '<div class="control-group">
+                <div class="control-label"><label id="plugins_timeline-lbl" for="plugins_timeline">' . JText::_("K2_FIELD_TIMELINE") . '</label></div>
+                <div class="controls">
+                    <fieldset id="plugins_timeline" class="radio">
+                        <input id="plugins_timeline0" name="plugins[timeline]" value="1" checked="checked" type="radio">
+                        <label for="plugins_timeline0">' . JText::_("K2_YES") . '</label>
+                        <input id="plugins_timeline1" name="plugins[timeline]" value="0" type="radio">
+                        <label for="plugins_timeline1">' . JText::_("K2_NO") . '</label>
+                    </fieldset>
+                </div></div>';
+
 
             // koniec formularza
             $form .= '</div>';
