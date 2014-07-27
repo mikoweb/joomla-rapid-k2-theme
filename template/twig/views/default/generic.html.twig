@@ -1,4 +1,4 @@
-{# filtrowanie według etykiet #}
+{# ten szablon jest używany na stronach filtrowania według daty i innych #}
 <section class="blogItems">
     {# tytuł #}
     <div class="page-header">
@@ -15,7 +15,7 @@
                 {# wpis #}
                 <article class="clearfix">
                     {# ilustracja #}
-                    {% if item.params.get('tagItemImage', 1) and item.imageGeneric is not empty %}
+                    {% if item.params.get('genericItemImage', 1) and item.imageGeneric is not empty %}
                         <figure>
                             <a href="{{ item.link }}" title="{% spaceless %}{{ item.title|striptags }}{% endspaceless %}">
                                 <img src="{{ item.imageGeneric }}" alt="{% spaceless %}{{ item.title|striptags }}{% endspaceless %}" />
@@ -27,14 +27,14 @@
                     {% endif %}
                     {# nagłówek #}
                     <header>
-                        {% if item.params.get('tagItemDateCreated', 1) %}
+                        {% if item.params.get('genericItemDateCreated', 1) %}
                             {# data #}
                             <time datetime="{{ item.created|date('Y-m-d H:i') }}">{{ item.created|date('d F Y') }}</time>
                         {% endif %}
-                        {% if item.params.get('tagItemTitle',  1) %}
+                        {% if item.params.get('genericItemTitle',  1) %}
                             {# tytuł #}
                             <h3 class="itemTitle">{% spaceless %}
-                                    {% if item.params.get('tagItemTitleLinked', 1) %}
+                                    {% if item.params.get('genericItemTitleLinked', 1) %}
                                         <a href="{{ item.link }}">{{ item.title }}</a>
                                     {% else %}
                                         {{ item.title }}
@@ -43,11 +43,11 @@
                         {% endif %}
                     </header>
                     {# lead #}
-                    {% if item.params.get('tagItemIntroText', 1) %}
+                    {% if item.params.get('genericItemIntroText', 1) %}
                         <p>{{ item.introtext|limit_words(14) }}</p>
                     {% endif %}
                     {# read more #}
-                    {% if item.params.get('tagItemReadMore') %}
+                    {% if item.params.get('genericItemReadMore') %}
                         <a class="btn btn-primary" href="{{ item.link }}">{{ trans('K2_READ_MORE') }}</a>
                     {% endif %}
                 </article>
