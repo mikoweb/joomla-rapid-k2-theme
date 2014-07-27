@@ -1,0 +1,65 @@
+{# wpisy użytkownika #}
+<section class="blogItems">
+    {# tytuł #}
+    <div class="page-header">
+        <h2>{{ k2.params.get('page_title_clean') }}</h2>
+    </div>
+    {# lista wpisów #}
+    {% if k2.items|length %}
+        <div class="row">
+        {% for item in k2.items %}
+            {% if loop.index is divisible by(2) %}
+                </div><div class="row">
+            {% endif %}
+            <div class="col-sm-6">
+                {# wpis #}
+                <article class="clearfix">
+                    {# ilustracja #}
+                    {% if item.params.get('userItemImage', 1) and item.imageGeneric is not empty %}
+                        <figure>
+                            <a href="{{ item.link }}" title="{% spaceless %}{{ item.title|striptags }}{% endspaceless %}">
+                                <img src="{{ item.imageGeneric }}" alt="{% spaceless %}{{ item.title|striptags }}{% endspaceless %}" />
+                            </a>
+                            {% if item.image_caption is not empty %}
+                                <figcaption>{% spaceless %}{{ item.image_caption }}{% endspaceless %}</figcaption>
+                            {% endif  %}
+                        </figure>
+                    {% endif %}
+                    {# nagłówek #}
+                    <header>
+                        {% if item.params.get('userItemDateCreated', 1) %}
+                            {# data #}
+                            <time datetime="{{ item.created|date('Y-m-d H:i') }}">{{ item.created|date('d F Y') }}</time>
+                        {% endif %}
+                        {% if item.params.get('userItemTitle',  1) %}
+                            {# tytuł #}
+                            <h3 class="itemTitle">{% spaceless %}
+                                    {% if item.params.get('userItemTitleLinked', 1) %}
+                                        <a href="{{ item.link }}">{{ item.title }}</a>
+                                    {% else %}
+                                        {{ item.title }}
+                                    {% endif %}
+                                {% endspaceless %}</h3>
+                        {% endif %}
+                    </header>
+                    {# lead #}
+                    {% if item.params.get('userItemIntroText', 1) %}
+                        <p>{{ item.introtext|limit_words(14) }}</p>
+                    {% endif %}
+                    {# read more #}
+                    {% if item.params.get('userItemReadMore') %}
+                        <a class="btn btn-primary" href="{{ item.link }}">{{ trans('K2_READ_MORE') }}</a>
+                    {% endif %}
+                </article>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+    {# Paginacja #}
+    {% if k2.pagination.getPagesLinks()|length %}
+        <div class="pagination-container">
+            {{ k2.pagination.getPagesLinks() }}
+            {# {{ k2.pagination.getPagesCounter() }} #}
+        </div>
+    {% endif %}
+</section>
