@@ -19,7 +19,7 @@ $document = $container->get('document');
 $document->element('script')->update(function ($value) use($k2) {
         $jinput = $jinput = JFactory::getApplication()->input;
         return $value
-            . '$.app.define("k2_pagination", '.json_encode($k2->pagination).'); $.app.define("k2_generic", '.json_encode(array(
+            . 'jQuery.app.define("k2_pagination", '.json_encode($k2->pagination).'); jQuery.app.define("k2_generic", '.json_encode(array(
                     'year' => $jinput->get('year', 0, 'int'),
                     'month' => $jinput->get('month', 0, 'int'),
                     'day' => $jinput->get('day', 0, 'int'),
