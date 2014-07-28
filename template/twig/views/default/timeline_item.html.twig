@@ -14,10 +14,6 @@
     {% endif %}
     {# nagłówek #}
     <header>
-        {% if item.params.get('catItemDateCreated') %}
-            {# data #}
-            <time datetime="{{ item.created|date('Y-m-d H:i') }}">{{ item.created|date('d F Y') }}</time>
-        {% endif %}
         {% if item.params.get('catItemTitle') %}
             {# tytuł #}
             <h3 class="itemTitle">{% spaceless %}
