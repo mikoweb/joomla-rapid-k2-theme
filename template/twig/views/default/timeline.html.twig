@@ -1,0 +1,42 @@
+{# oś czasu #}
+<section class="blogTimeLine">
+    {# tytuł strony #}
+    {% if k2.params.get('show_page_title') %}
+        <div class="page-header">
+            <h2>{% spaceless %}{{ k2.params.get('page_title')|escape }}{% endspaceless %}</h2>
+        </div>
+    {% endif %}
+    <div class="timeline">
+        <i class="icon-timeline"></i>
+    </div>
+    {# lista wpisów #}
+    {% if timeline.entries is not empty %}
+        {% set lastMonth = '' %}
+        <div class="month"><h4>{{ timeline.entries.0.created|date('F Y') }}</h4></div>
+        <div class="items">
+        {% for item in timeline.entries %}
+            {% set month = item.created|date('F') %}
+            {% if lastMonth != month and loop.index0 != 0 %}
+                {% set lastMonth = month %}
+                </div><div class="month"><h4>{{ item.created|date('F Y') }}</h4></div><div class="items">
+            {% endif %}
+            <div class="col">
+                {% include '@component/com_k2/templates/twig/views/' ~ template ~ '/timeline_item.html.twig'
+                    with { 'item': item, 'params': k2.params, 'utilities': utilities } only %}
+                <span class="dot"></span>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+</section>
+{# Paginacja #}
+{% if k2.pagination.getPagesLinks()|length %}
+    <div class="pagination-container pagination-timeline">
+        {% if k2.params.get('catPagination') %}
+            {{ k2.pagination.getPagesLinks() }}
+        {% endif %}
+        {% if k2.params.get('catPaginationResults') %}
+            {{ k2.pagination.getPagesCounter() }}
+        {% endif %}
+    </div>
+{% endif %}

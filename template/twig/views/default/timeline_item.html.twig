@@ -1,0 +1,41 @@
+{# pojedynczy item w kategorii #}
+<article class="clearfix">
+    {{ utilities.setDefaultImage(item, 'itemlist', params) }}
+    {# ilustracja #}
+    {% if item.params.get('catItemImage') and item.image is not empty %}
+        <figure>
+            <a href="{{ item.link }}" title="{% spaceless %}{{ item.title|striptags }}{% endspaceless %}">
+                <img src="{{ item.image }}" alt="{% spaceless %}{{ item.title|striptags }}{% endspaceless %}" />
+            </a>
+            {% if item.image_caption is not empty %}
+            <figcaption>{% spaceless %}{{ item.image_caption }}{% endspaceless %}</figcaption>
+            {% endif  %}
+        </figure>
+    {% endif %}
+    {# nagłówek #}
+    <header>
+        {% if item.params.get('catItemDateCreated') %}
+            {# data #}
+            <time datetime="{{ item.created|date('Y-m-d H:i') }}">{{ item.created|date('d F Y') }}</time>
+        {% endif %}
+        {% if item.params.get('catItemTitle') %}
+            {# tytuł #}
+            <h3 class="itemTitle">{% spaceless %}
+                {% if item.params.get('catItemTitleLinked') %}
+                    <a href="{{ item.link }}">{{ item.title }}</a>
+                {% else %}
+                    {{ item.title }}
+                {% endif %}
+            {% endspaceless %}</h3>
+        {% endif %}
+    </header>
+    {# lead #}
+    {% if item.params.get('catItemIntroText') %}
+        <p>{{ item.introtext|striptags }}</p>
+    {% endif %}
+    {# czytaj więcej #}
+    {% if item.params.get('catItemReadMore') %}
+        <a class="btn btn-primary" href="{{ item.link }}">{{ trans('K2_READ_MORE') }}</a>
+    {% endif %}
+    <span class="arrow"></span>
+</article>
