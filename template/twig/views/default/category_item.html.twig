@@ -1,9 +1,9 @@
 {# pojedynczy item w kategorii #}
 <article class="clearfix">
     {# ilustracja #}
-    {% if item.params.get('catItemImage') and item.image is not empty %}
+    {% if item.params.get('catItemImage') %}
         <figure>
-            <a href="{{ item.link }}" title="{% spaceless %}{{ item.title }}{% endspaceless %}">{{ item.image }}</a>
+            <a href="{{ item.link }}" title="{% spaceless %}{{ item.title }}{% endspaceless %}">{{ item.image|raw }}</a>
             {% if item.image_caption is not empty %}
             <figcaption>{% spaceless %}{{ item.image_caption }}{% endspaceless %}</figcaption>
             {% endif  %}
