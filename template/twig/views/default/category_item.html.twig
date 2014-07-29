@@ -1,6 +1,6 @@
 {# pojedynczy item w kategorii #}
 <article class="clearfix">
-    {{ utilities.setDefaultImage(item, 'itemlist', params) }}
+    {% set image = utilities.image(item) %}
     {# ilustracja #}
     {% if item.params.get('catItemImage') and item.image is not empty %}
         <figure>

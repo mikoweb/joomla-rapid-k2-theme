@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 defined('RAPID_FRAMEWORK') or die('Joomla! Rapid Framework is not installed.');
 
+use Joomla\Rapid\K2\K2Image;
 use Joomla\Rapid\Theme\TemplateOverride;
 use Joomla\RapidApp\App;
 
@@ -28,8 +29,9 @@ $document->element('script')->update(function ($value) use($k2) {
     });
 
 $utilities = new stdClass();
-$utilities->setDefaultImage = function ($item, $type, $params) {
-    K2HelperUtilities::setDefaultImage($item, $type, $params);
+$utilities->image = function ($item) {
+    $image = new K2Image($item);
+    var_dump($image);
 };
 
 $plugins = json_decode($this->category->plugins, true);
