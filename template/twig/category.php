@@ -31,7 +31,7 @@ $document->element('script')->update(function ($value) use($k2) {
 $utilities = new stdClass();
 $utilities->image = function ($item) {
     $image = new K2Image($item);
-    var_dump($image);
+    return $image;
 };
 
 $plugins = json_decode($this->category->plugins, true);
