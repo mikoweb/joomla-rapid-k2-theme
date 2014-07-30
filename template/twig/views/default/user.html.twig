@@ -17,7 +17,7 @@
                     {# ilustracja #}
                     {% if item.params.get('userItemImage', 1) and item.image is not empty %}
                         <figure>
-                            <a href="{{ item.link }}" title="{% spaceless %}{{ item.title }}{% endspaceless %}">{{ item.image }}</a>
+                            <a href="{{ item.link }}" title="{% spaceless %}{{ item.title }}{% endspaceless %}">{{ item.image|raw }}</a>
                             {% if item.image_caption is not empty %}
                                 <figcaption>{% spaceless %}{{ item.image_caption }}{% endspaceless %}</figcaption>
                             {% endif  %}
