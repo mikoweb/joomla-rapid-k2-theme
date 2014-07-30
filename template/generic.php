@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 defined('RAPID_FRAMEWORK') or die('Joomla! Rapid Framework is not installed.');
 
+use Joomla\Rapid\K2\K2Images;
 use Joomla\Rapid\Theme\TemplateOverride;
 use Joomla\RapidApp\App;
 
