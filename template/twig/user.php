@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 defined('RAPID_FRAMEWORK') or die('Joomla! Rapid Framework is not installed.');
 
+use Joomla\Rapid\K2\K2Images;
 use Joomla\Rapid\Theme\TemplateOverride;
 use Joomla\RapidApp\App;
 
@@ -26,6 +27,9 @@ $document->element('script')->update(function ($value) use($k2) {
         $code .= '});';
         return $value . $code;
     });
+
+// tworzenie ilustracji
+K2Images::create($k2, 'user', 'default');
 
 echo TemplateOverride::create('com_k2', '/templates/twig/views/default/user.html.twig')
     ->render(TemplateOverride::MODE_COMPONENT, array(
