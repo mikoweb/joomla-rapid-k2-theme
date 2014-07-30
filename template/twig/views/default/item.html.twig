@@ -5,11 +5,11 @@
     {{ k2.item.event.K2BeforeDisplay }}
     {# nagłówek #}
     <header>
-        {% if k2.item.params.get('catItemDateCreated') %}
+        {% if k2.item.params.get('itemDateCreated') %}
             {# data #}
             <time datetime="{{ k2.item.created|date('Y-m-d H:i') }}">{{ k2.item.created|date('d F Y') }}</time>
         {% endif %}
-        {% if k2.item.params.get('catItemTitle') %}
+        {% if k2.item.params.get('itemTitle') %}
             {# tytuł #}
             <h2 class="itemTitle">{% spaceless %}{{ k2.item.title }}{% endspaceless %}</h2>
         {% endif %}
@@ -17,6 +17,15 @@
     {# pluginy #}
     {{ k2.item.event.AfterDisplayTitle }}
     {{ k2.item.event.K2AfterDisplayTitle }}
+    {# ilustracja #}
+    {% if item.params.get('itemImage') and item.image is not empty %}
+        <figure class="itemImage">
+            {{ item.image|raw }}
+            {% if item.image_caption is not empty %}
+                <figcaption>{% spaceless %}{{ item.image_caption }}{% endspaceless %}</figcaption>
+            {% endif  %}
+        </figure>
+    {% endif %}
     {{ k2.item.event.BeforeDisplayContent }}
     {{ k2.item.event.K2BeforeDisplayContent }}
     {# treść #}
