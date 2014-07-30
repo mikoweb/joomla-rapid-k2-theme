@@ -15,11 +15,9 @@
                 {# wpis #}
                 <article class="clearfix">
                     {# ilustracja #}
-                    {% if item.params.get('genericItemImage', 1) and item.imageGeneric is not empty %}
+                    {% if item.params.get('genericItemImage', 1) and item.image is not empty %}
                         <figure>
-                            <a href="{{ item.link }}" title="{% spaceless %}{{ item.title|striptags }}{% endspaceless %}">
-                                <img src="{{ item.imageGeneric }}" alt="{% spaceless %}{{ item.title|striptags }}{% endspaceless %}" />
-                            </a>
+                            <a href="{{ item.link }}" title="{% spaceless %}{{ item.title }}{% endspaceless %}">{{ item.image|raw }}</a>
                             {% if item.image_caption is not empty %}
                                 <figcaption>{% spaceless %}{{ item.image_caption }}{% endspaceless %}</figcaption>
                             {% endif  %}
