@@ -11,3 +11,10 @@ images:
       - {jpeg_quality: 90, index: 4, width: 453, height: 300, format: 'jpg', media-index: 1}
       - {jpeg_quality: 90, index: 4, width: 344, height: 270, format: 'jpg', media-index: 2}
       - {jpeg_quality: 90, index: 4, width: 737, height: 250, format: 'jpg', media-index: 3}
+  layout:
+    item:
+      images:
+        - {jpeg_quality: 90, index: 4, width: 1170, height: 400, format: 'jpg', media-index: 0}
+        - {jpeg_quality: 90, index: 4, width: 970, height: 350, format: 'jpg', media-index: 1}
+        - {jpeg_quality: 90, index: 4, width: 750, height: 270, format: 'jpg', media-index: 2}
+        - {jpeg_quality: 90, index: 4, width: 737, height: 250, format: 'jpg', media-index: 3}
