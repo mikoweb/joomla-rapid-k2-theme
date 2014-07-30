@@ -18,11 +18,11 @@
     {{ k2.item.event.AfterDisplayTitle }}
     {{ k2.item.event.K2AfterDisplayTitle }}
     {# ilustracja #}
-    {% if item.params.get('itemImage') and item.image is not empty %}
+    {% if k2.item.params.get('itemImage') and k2.item.image is not empty %}
         <figure class="itemImage">
-            {{ item.image|raw }}
-            {% if item.image_caption is not empty %}
-                <figcaption>{% spaceless %}{{ item.image_caption }}{% endspaceless %}</figcaption>
+            {{ k2.item.image|raw }}
+            {% if k2.item.image_caption is not empty %}
+                <figcaption>{% spaceless %}{{ k2.item.image_caption }}{% endspaceless %}</figcaption>
             {% endif  %}
         </figure>
     {% endif %}
