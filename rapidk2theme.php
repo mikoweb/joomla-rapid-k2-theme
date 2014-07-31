@@ -16,6 +16,8 @@ defined('RAPID_FRAMEWORK') or die('Joomla! Rapid Framework is not installed.');
 // Load the K2 Plugin API
 JLoader::register('K2Plugin', JPATH_ADMINISTRATOR.DS.'components'.DS.'com_k2'.DS.'lib'.DS.'k2plugin.php');
 
+use Joomla\Rapid\K2\K2Images;
+
 // Initiate class to hold plugin events
 class PlgK2Rapidk2theme extends K2Plugin
 {
@@ -142,7 +144,115 @@ class PlgK2Rapidk2theme extends K2Plugin
      */
     public function onAfterK2Save(&$row, $isNew)
     {
-        var_dump($row);
-        var_dump($isNew);
+        $item = $this->prepareItem($row);
+        $view = new stdClass();
+        $view->items = array($item);
+
+        $plugins = json_decode($item->category->plugins, true);
+        $template = (isset($plugins["twig_template"]) ? $plugins["twig_template"] : "default");
+
+        $layouts = array(
+            'item' => $template,
+            'category' => $template,
+            'generic' => 'default',
+            'tag' => 'default',
+            'user' => 'default',
+            'latest' => 'default'
+        );
+        // tworzenie ilustracji
+        foreach ($layouts as $lay=>$tpl) {
+            K2Images::create($view, $lay, $tpl, true);
+        }
+    }
+
+    function prepareItem($item)
+    {
+        jimport('joomla.filesystem.file');
+        $params = K2HelperUtilities::getParams('com_k2');
+
+        //Category
+        $category = JTable::getInstance('K2Category', 'Table');
+        $category->load($item->catid);
+        $item->category = $category;
+
+        //Params
+        $cparams = class_exists('JParameter') ? new JParameter($category->params) : new JRegistry($category->params);
+        $iparams = class_exists('JParameter') ? new JParameter($item->params) : new JRegistry($item->params);
+        $item->params = version_compare(PHP_VERSION, '5.0.0', '>=') ? clone $params : $params;
+
+        if ($cparams->get('inheritFrom')) {
+            $masterCategoryID = $cparams->get('inheritFrom');
+            $masterCategory = JTable::getInstance('K2Category', 'Table');
+            $masterCategory->load((int)$masterCategoryID);
+            $cparams = class_exists('JParameter') ? new JParameter($masterCategory->params) : new JRegistry($masterCategory->params);
+        }
+        $item->params->merge($cparams);
+        $item->params->merge($iparams);
+
+        //Image
+        $item->imageXSmall = '';
+        $item->imageSmall = '';
+        $item->imageMedium = '';
+        $item->imageLarge = '';
+        $item->imageXLarge = '';
+
+        $date = JFactory::getDate($item->modified);
+        $timestamp = '?t='.$date->toUnix();
+
+        if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_XS.jpg'))
+        {
+            $item->imageXSmall = '/media/k2/items/cache/'.md5("Image".$item->id).'_XS.jpg';
+            if ($params->get('imageTimestamp'))
+            {
+                $item->imageXSmall .= $timestamp;
+            }
+        }
+
+        if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_S.jpg'))
+        {
+            $item->imageSmall = '/media/k2/items/cache/'.md5("Image".$item->id).'_S.jpg';
+            if ($params->get('imageTimestamp'))
+            {
+                $item->imageSmall .= $timestamp;
+            }
+        }
+
+        if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_M.jpg'))
+        {
+            $item->imageMedium = '/media/k2/items/cache/'.md5("Image".$item->id).'_M.jpg';
+            if ($params->get('imageTimestamp'))
+            {
+                $item->imageMedium .= $timestamp;
+            }
+        }
+
+        if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_L.jpg'))
+        {
+            $item->imageLarge = '/media/k2/items/cache/'.md5("Image".$item->id).'_L.jpg';
+            if ($params->get('imageTimestamp'))
+            {
+                $item->imageLarge .= $timestamp;
+            }
+        }
+
+        if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_XL.jpg'))
+        {
+            $item->imageXLarge = '/media/k2/items/cache/'.md5("Image".$item->id).'_XL.jpg';
+            if ($params->get('imageTimestamp'))
+            {
+                $item->imageXLarge .= $timestamp;
+            }
+        }
+
+        if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_Generic.jpg'))
+        {
+            $item->imageGeneric = '/media/k2/items/cache/'.md5("Image".$item->id).'_Generic.jpg';
+            if ($params->get('imageTimestamp'))
+            {
+                $item->imageGeneric .= $timestamp;
+            }
+        }
+
+        return $item;
     }
 }
