@@ -132,4 +132,16 @@ class PlgK2Rapidk2theme extends K2Plugin
 
         return null;
     }
+
+    /**
+     * Saves data in db after apply or save.
+     *
+     * @param 	object		The updated or new k2 item.
+     * @param 	boolean		Flag setting if the item is new or not.
+     * @return	void
+     */
+    public function onAfterK2Save(&$row, $isNew)
+    {
+        exit();
+    }
 }
