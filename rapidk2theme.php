@@ -142,6 +142,7 @@ class PlgK2Rapidk2theme extends K2Plugin
      */
     public function onAfterK2Save(&$row, $isNew)
     {
-        exit();
+        var_dump($row);
+        var_dump($isNew);
     }
 }
