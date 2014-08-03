@@ -2,13 +2,8 @@
 <article class="clearfix">
     {{ utilities.setDefaultImage(item, 'itemlist', params) }}
     {# ilustracja #}
-    {% if item.params.get('catItemImage') and item.image is not empty %}
-        <figure>
-            <a href="{{ item.link }}" title="{% spaceless %}{{ item.title }}{% endspaceless %}">{{ item.image|raw }}</a>
-            {% if item.image_caption is not empty %}
-            <figcaption>{% spaceless %}{{ item.image_caption }}{% endspaceless %}</figcaption>
-            {% endif  %}
-        </figure>
+    {% if item.params.get('catItemImage') and item.imageMedium is not empty %}
+    <div class="image"><a href="{{ item.link }}" title="{% spaceless %}{{ item.title }}{% endspaceless %}">{{ item.image|raw }}</a></div>
     {% endif %}
     {# nagłówek #}
     <header>
