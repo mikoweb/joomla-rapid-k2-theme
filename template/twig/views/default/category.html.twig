@@ -11,7 +11,7 @@
         <div class="row leading">
             {% set leadingSpanClass = (12/k2.params.get('num_leading_columns'))|round(1, 'floor') %}
             {% for item in k2.leading %}
-                {% if not loop.first and loop.index is divisible by(k2.params.get('num_leading_columns')) %}
+                {% if loop.index0 is divisible by(k2.params.get('num_leading_columns')) %}
                     </div><div class="row leading">
                 {% endif %}
                 <div class="col-sm-{{ leadingSpanClass }}">
