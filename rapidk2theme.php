@@ -136,15 +136,18 @@ class PlgK2Rapidk2theme extends K2Plugin
     }
 
     /**
-     * Saves data in db after apply or save.
-     *
-     * @param 	object		The updated or new k2 item.
-     * @param 	boolean		Flag setting if the item is new or not.
-     * @return	void
+     * Tworzenie atrapy wpisu
+     * @param $row
+     * @param $item
+     * @param $view
+     * @param $template
+     * @param $layouts
      */
-    public function onAfterK2Save(&$row, $isNew)
+    private function dummyItem(&$row, &$item, &$view, &$template, &$layouts)
     {
-        $item = $this->prepareItem($row);
+        // przetwarzanie wpisu
+        $item = $this->prepareItem(clone $row);
+        // atrapa widoku
         $view = new stdClass();
         $view->items = array($item);
 
@@ -159,99 +162,112 @@ class PlgK2Rapidk2theme extends K2Plugin
             'user' => 'default',
             'latest' => 'default'
         );
+    }
+
+    /**
+     * Usuwanie ilustracji w trakcie usuwania wpisów
+     */
+    public function onBeforeK2Remove()
+    {
+        $jinput = JFactory::getApplication()->input;
+        $items = $jinput->get('cid', array(), 'array');
+
+        JTable::addIncludePath(JPATH_ADMINISTRATOR . "/components/com_k2/tables/");
+        $row = JTable::getInstance('K2Item', 'Table');
+        if ($row) {
+            foreach ($items as $id) {
+                $row->load($id);
+                // dane wpisu
+                $item = null;
+                $view = null;
+                $template = null;
+                $layouts = null;
+                $this->dummyItem($row, $item, $view, $template, $layouts);
+
+                // tworzenie ilustracji
+                foreach ($layouts as $lay=>$tpl) {
+                    K2Images::create($view, $lay, $tpl, false, true);
+                }
+            }
+        }
+    }
+
+    /**
+     * Saves data in db before apply or save.
+     *
+     * @param 	object		The updated or new k2 item.
+     * @param 	boolean		Flag setting if the item is new or not.
+     * @return	void
+     */
+    public function onBeforeK2Save(&$row, $isNew)
+    {
+        /*
+         * Zanim nastąpi zapisanie danych do bazy, trzeba przywrócić
+         * tablicę z infomacjami o stanie zapisanych ilustracji.
+         */
+        if (!$isNew) {
+            $db = JFactory::getDbo();
+            $query = $db->getQuery(true);
+            $query->select($db->quoteName(array('plugins')));
+            $query->from($db->quoteName('#__k2_items'));
+            $query->where($db->quoteName('id') . ' = ' . $row->id);
+            $db->setQuery($query);
+            $results = $db->loadObjectList();
+            if (!empty($results)) {
+                $plugins = json_decode($row->plugins, true);
+                if (!is_array($plugins)) $plugins = array();
+                $tmp = json_decode($results[0]->plugins, true);
+                $imageData = (isset($tmp['imagedata']) && is_array($tmp['imagedata']))
+                    ? $tmp['imagedata'] : array();
+                unset($tmp);
+                $plugins['imagedata'] = $imageData;
+                $row->plugins = json_encode($plugins);
+            }
+        }
+    }
+
+    /**
+     * Saves data in db after apply or save.
+     *
+     * @param 	object		The updated or new k2 item.
+     * @param 	boolean		Flag setting if the item is new or not.
+     * @return	void
+     */
+    public function onAfterK2Save(&$row, $isNew)
+    {
+        // dane wpisu
+        $item = null;
+        $view = null;
+        $template = null;
+        $layouts = null;
+        $this->dummyItem($row, $item, $view, $template, $layouts);
+
+        /*
+         * Tabele trzeba zapisać bo w onBeforeK2Save
+         * zmieniono kolumnę $row->plugins
+         */
+        $row->store();
+
         // tworzenie ilustracji
         foreach ($layouts as $lay=>$tpl) {
-            K2Images::create($view, $lay, $tpl, true);
+            K2Images::create($view, $lay, $tpl);
         }
     }
 
     function prepareItem($item)
     {
-        jimport('joomla.filesystem.file');
-        $params = K2HelperUtilities::getParams('com_k2');
-
         //Category
         $category = JTable::getInstance('K2Category', 'Table');
         $category->load($item->catid);
         $item->category = $category;
 
-        //Params
-        $cparams = class_exists('JParameter') ? new JParameter($category->params) : new JRegistry($category->params);
-        $iparams = class_exists('JParameter') ? new JParameter($item->params) : new JRegistry($item->params);
-        $item->params = version_compare(PHP_VERSION, '5.0.0', '>=') ? clone $params : $params;
-
-        if ($cparams->get('inheritFrom')) {
-            $masterCategoryID = $cparams->get('inheritFrom');
-            $masterCategory = JTable::getInstance('K2Category', 'Table');
-            $masterCategory->load((int)$masterCategoryID);
-            $cparams = class_exists('JParameter') ? new JParameter($masterCategory->params) : new JRegistry($masterCategory->params);
-        }
-        $item->params->merge($cparams);
-        $item->params->merge($iparams);
-
         //Image
-        $item->imageXSmall = '';
-        $item->imageSmall = '';
-        $item->imageMedium = '';
-        $item->imageLarge = '';
-        $item->imageXLarge = '';
-
-        $date = JFactory::getDate($item->modified);
-        $timestamp = '?t='.$date->toUnix();
-
-        if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_XS.jpg'))
-        {
-            $item->imageXSmall = '/media/k2/items/cache/'.md5("Image".$item->id).'_XS.jpg';
-            if ($params->get('imageTimestamp'))
-            {
-                $item->imageXSmall .= $timestamp;
-            }
-        }
-
-        if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_S.jpg'))
-        {
-            $item->imageSmall = '/media/k2/items/cache/'.md5("Image".$item->id).'_S.jpg';
-            if ($params->get('imageTimestamp'))
-            {
-                $item->imageSmall .= $timestamp;
-            }
-        }
-
-        if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_M.jpg'))
-        {
-            $item->imageMedium = '/media/k2/items/cache/'.md5("Image".$item->id).'_M.jpg';
-            if ($params->get('imageTimestamp'))
-            {
-                $item->imageMedium .= $timestamp;
-            }
-        }
-
-        if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_L.jpg'))
-        {
-            $item->imageLarge = '/media/k2/items/cache/'.md5("Image".$item->id).'_L.jpg';
-            if ($params->get('imageTimestamp'))
-            {
-                $item->imageLarge .= $timestamp;
-            }
-        }
-
-        if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_XL.jpg'))
-        {
-            $item->imageXLarge = '/media/k2/items/cache/'.md5("Image".$item->id).'_XL.jpg';
-            if ($params->get('imageTimestamp'))
-            {
-                $item->imageXLarge .= $timestamp;
-            }
-        }
-
-        if (JFile::exists(JPATH_SITE.DS.'media'.DS.'k2'.DS.'items'.DS.'cache'.DS.md5("Image".$item->id).'_Generic.jpg'))
-        {
-            $item->imageGeneric = '/media/k2/items/cache/'.md5("Image".$item->id).'_Generic.jpg';
-            if ($params->get('imageTimestamp'))
-            {
-                $item->imageGeneric .= $timestamp;
-            }
-        }
+        $item->imageXSmall = '/media/k2/items/cache/'.md5("Image".$item->id).'_XS.jpg';
+        $item->imageSmall = '/media/k2/items/cache/'.md5("Image".$item->id).'_S.jpg';
+        $item->imageMedium = '/media/k2/items/cache/'.md5("Image".$item->id).'_M.jpg';
+        $item->imageLarge = '/media/k2/items/cache/'.md5("Image".$item->id).'_L.jpg';
+        $item->imageXLarge = '/media/k2/items/cache/'.md5("Image".$item->id).'_XL.jpg';
+        $item->imageGeneric = '/media/k2/items/cache/'.md5("Image".$item->id).'_Generic.jpg';
 
         return $item;
     }
