@@ -8,7 +8,7 @@
     {% if k2.items|length %}
         <div class="row">
         {% for item in k2.items %}
-            {% if loop.index is divisible by(2) %}
+            {% if not loop.first and loop.index0 is divisible by(2) %}
                 </div><div class="row">
             {% endif %}
             <div class="col-sm-6">

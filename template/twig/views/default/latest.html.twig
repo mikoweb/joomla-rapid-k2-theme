@@ -8,7 +8,7 @@
                 <h2><a href="{{ block.link }}">{{ block.name }}</a></h2>
                 <div class="row">
                     {% for item in block.items %}
-                        {% if loop.index is divisible by(k2.params.get('latestItemsCols')) %}
+                        {% if not loop.first and loop.index0 is divisible by(k2.params.get('latestItemsCols')) %}
                             </div><div class="row">
                         {% endif %}
                         <div class="col-sm-{{ gridWidth }}">
@@ -24,7 +24,7 @@
                 <h2><a href="{{ block.link }}">{{ block.name }}</a></h2>
                 <div class="row">
                     {% for item in block.items %}
-                        {% if loop.index is divisible by(k2.params.get('latestItemsCols')) %}
+                        {% if not loop.first and loop.index0 is divisible by(k2.params.get('latestItemsCols')) %}
                             </div><div class="row">
                         {% endif %}
                         <div class="col-sm-{{ gridWidth }}">
