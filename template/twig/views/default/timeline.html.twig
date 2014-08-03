@@ -11,12 +11,14 @@
     </div>
     {# lista wpisów #}
     {% if timeline.entries is not empty %}
-        {% set lastMonth = '' %}
         <div class="month"><h4>{{ timeline.entries.0.created|date('F Y') }}</h4></div>
         <div class="items">
         {% for item in timeline.entries %}
             {% set month = item.created|date('F') %}
-            {% if lastMonth != month and loop.index0 != 0 %}
+            {% if loop.first %}
+                {% set lastMonth = month %}
+            {% endif %}
+            {% if lastMonth != month and not loop.first %}
                 {% set lastMonth = month %}
                 </div><div class="month"><h4>{{ item.created|date('F Y') }}</h4></div><div class="items">
             {% endif %}
