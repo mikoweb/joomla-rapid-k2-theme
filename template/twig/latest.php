@@ -14,7 +14,11 @@ use Joomla\Rapid\K2\K2Images;
 use Joomla\Rapid\Theme\TemplateOverride;
 
 // tworzenie ilustracji
-K2Images::create($this, 'latest', 'default');
+K2Images::create(array(
+        'view' => $this,
+        'layout' => 'latest',
+        'k2template' => 'default'
+    ));
 
 echo TemplateOverride::create('com_k2', '/templates/twig/views/default/latest.html.twig')
     ->render(TemplateOverride::MODE_COMPONENT, array(

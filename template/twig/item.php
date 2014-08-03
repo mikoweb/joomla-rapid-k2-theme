@@ -22,7 +22,11 @@ $plugins = json_decode($this->item->category->plugins, true);
 $template = (isset($plugins["twig_template"]) ? $plugins["twig_template"] : "default");
 
 // tworzenie ilustracji
-K2Images::create($this, 'item', $template);
+K2Images::create(array(
+        'view' => $this,
+        'layout' => 'item',
+        'k2template' => $template
+    ));
 
 echo TemplateOverride::create('com_k2', '/templates/twig/views/' . $template . '/item.html.twig')
     ->render(TemplateOverride::MODE_COMPONENT, array(

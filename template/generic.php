@@ -35,7 +35,11 @@ $document->element('script')->update(function ($value) use($k2) {
     });
 
 // tworzenie ilustracji
-K2Images::create($k2, 'generic', 'default');
+K2Images::create(array(
+        'view' => $k2,
+        'layout' => 'generic',
+        'k2template' => 'default'
+    ));
 
 echo TemplateOverride::create('com_k2', '/templates/twig/views/default/generic.html.twig')
     ->render(TemplateOverride::MODE_COMPONENT, array(

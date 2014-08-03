@@ -29,7 +29,11 @@ $document->element('script')->update(function ($value) use($k2) {
     });
 
 // tworzenie ilustracji
-K2Images::create($k2, 'tag', 'default');
+K2Images::create(array(
+        'view' => $k2,
+        'layout' => 'tag',
+        'k2template' => 'default'
+    ));
 
 echo TemplateOverride::create('com_k2', '/templates/twig/views/default/tag.html.twig')
     ->render(TemplateOverride::MODE_COMPONENT, array(

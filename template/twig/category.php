@@ -38,7 +38,11 @@ $timeline = array(
 );
 
 // tworzenie ilustracji
-K2Images::create($k2, 'category', $template);
+K2Images::create(array(
+        'view' => $k2,
+        'layout' => 'category',
+        'k2template' => $template
+    ));
 
 // renderowanie widoku
 echo TemplateOverride::create('com_k2', '/templates/twig/views/' . $template . '/' . (!$timeline['enable'] ? 'category' : 'timeline') . '.html.twig')

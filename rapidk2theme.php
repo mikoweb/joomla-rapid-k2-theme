@@ -186,7 +186,12 @@ class PlgK2Rapidk2theme extends K2Plugin
 
                 // tworzenie ilustracji
                 foreach ($layouts as $lay=>$tpl) {
-                    K2Images::create($view, $lay, $tpl, false, true);
+                    K2Images::create(array(
+                            'view' => $view,
+                            'layout' => $lay,
+                            'k2template' => $tpl,
+                            'cleanup_mode' => true
+                        ));
                 }
             }
         }
@@ -250,7 +255,11 @@ class PlgK2Rapidk2theme extends K2Plugin
 
         // tworzenie ilustracji
         foreach ($layouts as $lay=>$tpl) {
-            K2Images::create($view, $lay, $tpl);
+            K2Images::create(array(
+                    'view' => $view,
+                    'layout' => $lay,
+                    'k2template' => $tpl
+                ));
         }
     }
 
