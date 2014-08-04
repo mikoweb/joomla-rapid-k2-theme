@@ -1,5 +1,5 @@
 {# pojedynczy item w kategorii #}
-<article class="clearfix">
+<article class="clearfix" role="article">
     {# ilustracja #}
     {% if item.params.get('catItemImage') and item.imageMedium is not empty %}
     <div class="image"><a href="{{ item.link }}" title="{% spaceless %}{{ item.title }}{% endspaceless %}">{{ item.image|raw }}</a></div>

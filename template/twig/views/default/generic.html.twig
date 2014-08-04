@@ -13,7 +13,7 @@
             {% endif %}
             <div class="col-sm-6">
                 {# wpis #}
-                <article class="clearfix">
+                <article class="clearfix" role="article">
                     {# ilustracja #}
                     {% if item.params.get('genericItemImage', 1) and item.imageMedium is not empty %}
                     <div class="image"><a href="{{ item.link }}" title="{% spaceless %}{{ item.title }}{% endspaceless %}">{{ item.image|raw }}</a></div>

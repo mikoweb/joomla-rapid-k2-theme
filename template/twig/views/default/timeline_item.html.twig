@@ -1,5 +1,5 @@
 {# pojedynczy item w kategorii #}
-<article class="clearfix">
+<article class="clearfix" role="article">
     {{ utilities.setDefaultImage(item, 'itemlist', params) }}
     {# ilustracja #}
     {% if item.params.get('catItemImage') and item.imageMedium is not empty %}
