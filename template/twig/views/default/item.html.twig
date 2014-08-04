@@ -78,7 +78,7 @@
                             <li class="website"><a itemprop="url" href="{{ k2.item.author.profile.url }}" target="_blank">{{ k2.item.author.profile.url|replace({'http://': '', 'https://': ''}) }}</a></li>
                         {% endif %}
                         {% if k2.item.params.get('itemAuthorEmail') and k2.item.author.email is not empty %}
-                            <li class="email"><a itemprop="email" href="mailto:{{ k2.item.author.email }}">{{ k2.item.author.email }}</a></li>
+                            <li class="email">{{ k2.item.author.email|safe_email }}</li>
                         {% endif %}
                     </ul>
                 {% endif %}
