@@ -258,7 +258,8 @@ class PlgK2Rapidk2theme extends K2Plugin
             K2Images::create(array(
                     'view' => $view,
                     'layout' => $lay,
-                    'k2template' => $tpl
+                    'k2template' => $tpl,
+                    'compare_image_mode' => 'full'
                 ));
         }
     }
