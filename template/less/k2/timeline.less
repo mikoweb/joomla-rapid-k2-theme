@@ -1,0 +1,139 @@
+/**
+ * @package Joomla Rapid K2 Theme
+ * @author Rafał Mikołajun <rafal@mikoweb.pl>
+ * @url http://www.vision-web.pl
+ * @license http://opensource.org/licenses/MIT The MIT License (MIT)
+ */
+
+/* oś czasu */
+.blogTimeLine {
+  .clearfix();
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  padding-top: 70px;
+
+  > .timeline {
+    position: absolute;
+    top: 0;
+    left:0;
+    right:0;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+    width: 2px;
+    text-align: center;
+    background: #444444;
+
+    .icon-timeline {
+      background: url('../images/icon-timeline.png') no-repeat center;
+      width: 53px;
+      height: 45px;
+      position: absolute;
+      left: -26px;
+      top: -3px;
+    }
+  }
+
+  > .items {
+    > .col {
+      float: left;
+      width: 50%;
+      .box-sizing(border-box);
+
+      &:nth-child(2n-1) {
+        clear: left;
+      }
+
+      &:nth-child(2n) {
+        clear: right;
+      }
+
+      > .dot {
+        width: 12px;
+        height: 12px;
+        background: #444444;
+        position: absolute;
+        top: 90px;
+        right: -6px;
+        border-radius: 6px;
+
+        &.right {
+          right: auto;
+          left: -6px;
+        }
+      }
+    }
+  }
+
+  > .month {
+    position: relative;
+    z-index: 2;
+    display: block;
+    text-align: center;
+    clear: both;
+    margin-bottom: 15px;
+
+    h4 {
+      font-size: 14px;
+      line-height: 18px;
+      display: inline-block;
+      .ie7-inline-block();
+      color: #222222;
+      background: #fff;
+      border: 1px solid #444444;
+      padding: 4px 10px;
+    }
+  }
+
+  article {
+    position: relative;
+    margin: 0 60px 45px;
+    border: 1px solid #444444;
+    border-bottom-width: 2px;
+
+    > .arrow {
+      position: absolute;
+      top: 90px;
+      right: -7px;
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-left: 6px solid #444444;
+
+      &.right {
+        right: auto;
+        left: -7px;
+        border-left: none 0;
+        border-right: 6px solid #444444;
+      }
+    }
+  }
+}
+
+@media (max-width: @screen-xs-max) {
+  .blogTimeLine {
+    margin-top: 0;
+    padding-top: 0;
+
+    > .items {
+      > .col {
+        float: none;
+        width: auto;
+
+        > .dot {
+          display: none;
+        }
+      }
+    }
+
+    article {
+      margin: 0 0 45px;
+    }
+
+    > .timeline {
+      display: none;
+    }
+  }
+}
