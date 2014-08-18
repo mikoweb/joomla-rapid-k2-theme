@@ -42,6 +42,14 @@ class plgK2Rapidk2themeInstallerScript
                 $row->check();
                 $row->store();
             }
+
+            /*
+             * Zaleca się zmiane typu kolumny 'plugins' w tabeli 'k2_items' na mediumtext
+             * ze zględu na to, że dane ilustracji mogą przekroczyć 64 kB.
+             */
+            $db = JFactory::getDbo();
+            $db->setQuery("ALTER TABLE #__k2_items CHANGE plugins plugins MEDIUMTEXT NOT NULL;");
+            $db->query();
         }
     }
 }

@@ -1,2 +1,0 @@
-Zaleca się zmiane typu kolumny 'plugins' w tabeli 'k2_items' na mediumtext
-ze zględu na to, że dane ilustracji mogą przekroczyć 64 kB.
