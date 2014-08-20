@@ -30,8 +30,6 @@ if (is_array($this->item->extra_fields)) {
     }
 }
 
-var_dump($fields);
-
 echo TemplateOverride::create('com_k2', '/templates/twig/views/' . $template . '/item.html.twig')
     ->render(TemplateOverride::MODE_COMPONENT, array(
             "k2" => $this,
