@@ -23,7 +23,15 @@ K2Images::create(array(
         'k2template' => $template
     ));
 
+$fields = array();
+foreach ($this->item->extra_fields as $field) {
+    $fields[$field->alias] = $field;
+}
+
+var_dump($fields);
+
 echo TemplateOverride::create('com_k2', '/templates/twig/views/' . $template . '/item.html.twig')
     ->render(TemplateOverride::MODE_COMPONENT, array(
-            "k2" => $this
+            "k2" => $this,
+            "fields" => &$fields
         ));
