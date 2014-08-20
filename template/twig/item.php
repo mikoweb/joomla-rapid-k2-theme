@@ -24,8 +24,10 @@ K2Images::create(array(
     ));
 
 $fields = array();
-foreach ($this->item->extra_fields as $field) {
-    $fields[$field->alias] = $field;
+if (is_array($this->item->extra_fields)) {
+    foreach ($this->item->extra_fields as $field) {
+        $fields[$field->alias] = $field;
+    }
 }
 
 var_dump($fields);
