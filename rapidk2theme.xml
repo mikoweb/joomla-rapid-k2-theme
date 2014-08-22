@@ -8,6 +8,7 @@
     <authorEmail>rafal@vision-web.pl</authorEmail>
     <authorUrl>www.vision-web.pl</authorUrl>
     <version>0.1.0</version>
+    
     <scriptfile>install.php</scriptfile>
     <files>
         <folder>template</folder>
