@@ -12,7 +12,6 @@
         }
     ],
     "require": {
-        "mikoweb/joomla-rapid-composer": "~0.0.10",
         "mikoweb/joomla-rapid-framework-plugin": "dev-master"
     },
     "minimum-stability": "dev",
